@@ -2,9 +2,16 @@ const fs = require("fs");
 const path = require("path");
 
 const outputFolder = path.join(__dirname, "dist");
-fs.mkdirSync(outputFolder, { recursive: true });
-
 const files = ["index.html", "style.css", "script.js"];
+
+files.forEach((file) => {
+  const source = path.join(__dirname, file);
+  if (!fs.existsSync(source)) {
+    throw new Error("Required source file is missing: " + file);
+  }
+});
+
+fs.mkdirSync(outputFolder, { recursive: true });
 
 files.forEach((file) => {
   const source = path.join(__dirname, file);
